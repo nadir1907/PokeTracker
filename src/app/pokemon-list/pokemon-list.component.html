@@ -1,0 +1,11 @@
+<h1 class="text-center text-primary mb-4">Pokemons</h1>
+<div class="row m-3">
+  <div *ngFor="let pokemon of pokemonList" class="col-xxl-1 col-xl-2 col-lg-2 col-md-2 col-sm-3 mb-4">
+    <div class="card shadow-sm border-3 text-center">
+      <img [src]="pokemon.sprite" alt="{{ pokemon.name }}" class="card-img-top p-3">
+      <div class="card-body">
+        <p class="card-title">{{ pokemon.name }}</p>
+      </div>
+    </div>
+  </div>
+</div>
