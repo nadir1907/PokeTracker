@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {PokemonClient} from 'pokenode-ts';
 import {NgForOf} from '@angular/common';
 import {Pokemon} from '../Interfaces/pokemon'
+import { Modal } from 'bootstrap';
 
 
 @Component({
@@ -15,29 +16,35 @@ import {Pokemon} from '../Interfaces/pokemon'
 
 export class PokemonListComponent {
   private pokemonsNamesList: string[] = [];
-  protected pokemonList: Pokemon[] = [];
+  private modalInstance!: Modal;
+  protected sortedPokemons: Pokemon[] = [];
+  selectedPokemon: Pokemon | null = null;
 
-  ngOnInit() {
-    (async () => {
-      const api = new PokemonClient();
+  async ngOnInit() {
+    const api = new PokemonClient();
 
-      await api.listPokemons(0, 30).then((result) => {
-        result.results.forEach(value => {
-          this.pokemonsNamesList.push(value.name);
-        })
-      });
+    // 1. Hol die ersten 30 Pokémon-Namen
+    const result = await api.listPokemons(0, 30);
+    this.pokemonsNamesList = result.results.map((value) => value.name);
 
-      this.pokemonsNamesList.forEach((value) => {
-        api.getPokemonByName(value).then((result) => {
-          console.log(value);
-          this.pokemonList.push({
-            name: result.name,
-            sprite: result.sprites.front_default,
-            order: result.order,
-          });
-        });
-      });
-      this.pokemonList.sort((a, b) => a.order - b.order);
-    })();
+    // 2. Lade alle Pokémon-Details parallel
+    this.sortedPokemons = await Promise.all(
+      this.pokemonsNamesList.map(async (name) => {
+        const result = await api.getPokemonByName(name);
+        return {
+          name: result.name,
+          sprite: result.sprites.front_default,
+          order: result.order,
+        };
+      })
+    );
+  }
+
+  openModal(pokemon: Pokemon) {
+    this.selectedPokemon = pokemon;
+    if (!this.modalInstance) {
+      this.modalInstance = new Modal(document.getElementById('pokemonModal')!);
+    }
+    this.modalInstance.show();
   }
 }

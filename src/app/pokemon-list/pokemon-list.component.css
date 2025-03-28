@@ -1,1 +1,26 @@
-@import "tailwindcss";
+@import "bootstrap";
+.pokemon-card {
+  border-radius: 15px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  background: linear-gradient(145deg, #e0e0e0, #ffffff);
+  box-shadow: 3px 3px 10px #bebebe, -3px -3px 10px #ffffff;
+}
+
+.pokemon-card:hover {
+  transform: scale(1.05);
+  box-shadow: 5px 5px 15px #bebebe, -5px -5px 15px #ffffff;
+}
+
+.modal-content {
+  border-radius: 20px;
+  background: #f8f9fa;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-footer {
+  border-top: none;
+}
