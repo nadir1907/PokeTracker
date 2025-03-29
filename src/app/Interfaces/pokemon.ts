@@ -2,4 +2,5 @@
   name: string;
   sprite: string | null;
   order: number;
+  types: string[];
 }
