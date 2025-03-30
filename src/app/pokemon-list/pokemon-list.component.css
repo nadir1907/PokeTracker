@@ -1,27 +1,166 @@
+#custom-title{
+  font-size: 4rem;
+}
+
 .pokemon-card {
   border-radius: 15px;
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2), -3px -3px 10px rgba(255, 255, 255, 0.5);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+}
+
+.pokemon-overlay {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.pokemon-card:hover .pokemon-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.card-img-top{
+  filter: drop-shadow(4px 3px 4px black);
+}
+
+.overlay-content {
+  position: absolute;
+  bottom: 10px;
+  z-index: 2;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 .pokemon-card:hover {
   transform: scale(1.05);
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.5);
 }
 
-.card-title {
+.modal-pokemon {
+  border-radius: 20px;
+  color: white;
+  text-align: center;
+  padding: 30px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.pokemon-modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.pokemon-modal-img {
+  width: 200px;
+  height: auto;
+  filter: drop-shadow(9px 4px 6px black);
+}
+
+.pokemon-details {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  font-size: 1.1rem;
+  color: black;
+}
+
+.stats-table {
+  width: 100%;
+  --bs-table-bg: transparent;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.stats-table th {
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  padding: 12px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.stats-table td {
+  padding: 10px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.stats-table,
+.stats-table th,
+.stats-table td {
+  border: none;
+}
+
+
+.stats-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.stats-table tr:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transition: background 0.3s ease-in-out;
+}
+
+.stat-value {
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.stat-value.low {
+  background: #ff4d4d;
+  color: white;
+}
+
+.stat-value.medium {
+  background: #ffcc00;
+  color: black;
+}
+
+.stat-value.high {
+  background: #4caf50;
+  color: white;
+}
+
+
+.modal-footer {
+  border: none;
+}
+
+.btn-primary {
+  background: #ff4500;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
   font-weight: bold;
   font-size: 1.2rem;
-  color: #fff;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.modal-content {
-  border-radius: 20px;
-  background: #f8f9fa;
-}
-
-.modal-header, .modal-footer {
-  border: none;
+.btn-primary:hover {
+  background: #cc3700;
 }

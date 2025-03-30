@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {PokemonClient} from 'pokenode-ts';
-import {NgForOf, NgStyle} from '@angular/common';
+import {NgClass, NgForOf, NgIf, NgStyle} from '@angular/common';
 import {Pokemon} from '../Interfaces/pokemon'
 import { Modal } from 'bootstrap';
 import {typeColors} from '../Mappings/typeColors';
@@ -10,7 +10,9 @@ import {typeColors} from '../Mappings/typeColors';
   selector: 'app-pokemon-list',
   imports: [
     NgForOf,
-    NgStyle
+    NgStyle,
+    NgIf,
+    NgClass
   ],
   templateUrl: './pokemon-list.component.html',
   styleUrl: './pokemon-list.component.css'
@@ -39,6 +41,46 @@ export class PokemonListComponent {
           sprite: result.sprites.front_default,
           order: result.order,
           types: result.types.map((type) => type.type.name),
+          height: result.height,
+          weight: result.weight,
+          stats: [
+            {
+              base_stat: result.stats[0].base_stat,
+              stat: {
+                name: result.stats[0].stat.name
+              }
+            },
+            {
+              base_stat: result.stats[1].base_stat,
+              stat: {
+                name: result.stats[1].stat.name
+              }
+            },
+            {
+              base_stat: result.stats[2].base_stat,
+              stat: {
+                name: result.stats[2].stat.name
+              }
+            },
+            {
+              base_stat: result.stats[3].base_stat,
+              stat: {
+                name: result.stats[3].stat.name
+              }
+            },
+            {
+              base_stat: result.stats[4].base_stat,
+              stat: {
+                name: result.stats[4].stat.name
+              }
+            },
+            {
+              base_stat: result.stats[5].base_stat,
+              stat: {
+                name: result.stats[5].stat.name
+              }
+            }
+          ]
         };
       })
     );
@@ -53,18 +95,18 @@ export class PokemonListComponent {
   }
 
   isValidPokemonType(type: string): boolean {
-    // Wir prüfen, ob der Typ im typeColors-Objekt existiert
+    // Prüfen, ob der Typ im typeColors existiert
     return typeColors.hasOwnProperty(type.toLowerCase());
   }
 
   getCardBackgroundColor(types: string[]): string {
-    const primaryType = types[0].toLowerCase(); // Wir nehmen den ersten Typ (konvertiert zu Kleinbuchstaben)
+    const primaryType = types[0].toLowerCase();
 
-    // Wenn der Typ gültig ist, verwenden wir ihn. Andernfalls geben wir eine Standardfarbe zurück.
+    // Wenn Typ gültig, verwende ihn. Andernfalls Standardfarbe.
     if (this.isValidPokemonType(primaryType)) {
-      return typeColors[primaryType]; // Hier wird sicher auf typeColors zugegriffen
+      return typeColors[primaryType];
     } else {
-      return '#ffffff'; // Rückfallfarbe
+      return '#ffffff';
     }
   }
 

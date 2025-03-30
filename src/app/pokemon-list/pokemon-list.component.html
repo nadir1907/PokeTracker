@@ -1,16 +1,19 @@
-<h1 class="text-center text-warning mb-4">Pokédex</h1>
+<h1 class="text-center text-black fw-bold mb-4" id="custom-title">Pokédex</h1>
 
 <div class="container-fluid">
   <div class="row">
     <div *ngFor="let pokemon of sortedPokemons" class="col-xxl-1 col-xl-2 col-lg-2 col-md-3 col-sm-4 mb-4">
       <div
         class="card pokemon-card"
-        [ngStyle]="{ 'background': getCardBackgroundColor(pokemon.types) }"
+        [ngStyle]="{'background': getCardBackgroundColor(pokemon.types), 'box-shadow': '0 0 15px ' + getCardBackgroundColor(pokemon.types)
+          }"
         (click)="openModal(pokemon)"
       >
-        <img [src]="pokemon.sprite" alt="{{ pokemon.name }}" class="card-img-top p-3" />
-        <div class="card-body">
-          <p class="card-title text-capitalize">{{ pokemon.name }}</p>
+        <div class="pokemon-overlay">
+          <img [src]="pokemon.sprite" alt="{{ pokemon.name }}" class="card-img-top p-3"/>
+          <div class="overlay-content">
+            <p class="card-title text-capitalize">{{ pokemon.name }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -19,18 +22,48 @@
 
 <!-- Modal -->
 <div class="modal fade" id="pokemonModal" tabindex="-1" aria-labelledby="pokemonModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title text-capitalize" id="pokemonModalLabel">{{ selectedPokemon?.name }}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div *ngIf="selectedPokemon" class="modal-content modal-pokemon"
+         [ngStyle]="{ 'background': getCardBackgroundColor(selectedPokemon.types) }">
+      <div class="modal-header border-0">
+        <h2 class="modal-title text-capitalize" id="pokemonModalLabel">{{ selectedPokemon.name }}</h2>
       </div>
-      <div class="modal-body">
-        <img [src]="selectedPokemon?.sprite" class="img-fluid" alt="{{ selectedPokemon?.name }}" />
-        <p class="mt-3"><strong>Types:</strong> {{ selectedPokemon?.types }}</p>
+      <div class="modal-body text-center">
+        <div class="pokemon-modal-content">
+          <img [src]="selectedPokemon.sprite" class="img-fluid pokemon-modal-img" alt="{{ selectedPokemon.name }}"/>
+          <div class="pokemon-details">
+            <p><strong>Types:</strong> {{ selectedPokemon.types.join(', ') }}</p>
+            <p><strong>Height:</strong> {{ selectedPokemon.height }}ft</p>
+            <p><strong>Weight:</strong> {{ selectedPokemon.weight }}lbs</p>
+            <table class="table stats-table"
+                   [ngStyle]="{ 'background': getCardBackgroundColor(selectedPokemon.types) }">
+              <thead>
+              <tr>
+                <th>Stat</th>
+                <th>Value</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let stat of selectedPokemon.stats">
+                <td>{{ stat.stat.name }}</td>
+                <td>
+                  <span [ngClass]="{
+                    'stat-value': true,
+                    'low': stat.base_stat < 50,
+                    'medium': stat.base_stat >= 50 && stat.base_stat < 80,
+                    'high': stat.base_stat >= 80
+                  }">
+                    {{ stat.base_stat }}
+                  </span>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+      <div class="modal-footer border-0 justify-content-center">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Schließen</button>
       </div>
     </div>
   </div>
