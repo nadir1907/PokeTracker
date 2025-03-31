@@ -28,7 +28,7 @@ export class PokemonListComponent {
     const api = new PokemonClient();
 
     // 1. Hol die ersten 30 Pokémon-Namen
-    const result = await api.listPokemons(0, 2500);
+    const result = await api.listPokemons(0, 100);
     this.pokemonsNamesList = result.results.map((value) => value.name);
 
     // 2. Lade alle Pokémon-Details parallel
