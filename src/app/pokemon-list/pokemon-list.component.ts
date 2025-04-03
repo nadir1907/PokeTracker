@@ -15,7 +15,8 @@ import {typeColors} from '../Mappings/typeColors';
     NgClass
   ],
   templateUrl: './pokemon-list.component.html',
-  styleUrl: './pokemon-list.component.css'
+  styleUrl: './pokemon-list.component.css',
+  standalone: true
 })
 
 export class PokemonListComponent {
